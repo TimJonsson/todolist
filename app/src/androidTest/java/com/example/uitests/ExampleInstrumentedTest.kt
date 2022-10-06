@@ -1,4 +1,4 @@
-package com.example.todolist
+package com.example.uitests
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,6 @@ import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.concurrent.thread
 
 private val BASIC_SAMPLE_PACKAGE = "com.example.todolist"
 
@@ -44,7 +43,8 @@ class ExampleInstrumentedTest {
         // Launch the app
         val context = ApplicationProvider.getApplicationContext<Context>()
         val intent = context.packageManager.getLaunchIntentForPackage(
-            BASIC_SAMPLE_PACKAGE)?.apply {
+            BASIC_SAMPLE_PACKAGE
+        )?.apply {
             // Clear out any previous instances
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
