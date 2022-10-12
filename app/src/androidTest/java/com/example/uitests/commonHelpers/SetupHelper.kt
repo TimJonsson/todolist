@@ -1,17 +1,14 @@
-package com.example.uitests
+package com.example.uitests.commonHelpers
 
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.*
-import org.hamcrest.CoreMatchers.notNullValue
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
+import org.hamcrest.CoreMatchers
+import org.junit.Assert
 
 private val BASIC_SAMPLE_PACKAGE = "com.example.todolist"
 
@@ -19,22 +16,17 @@ private val LAUNCH_TIMEOUT = 5000L
 
 private val STRING_TO_BE_TYPED = "UiAutomator"
 
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+open class SetupHelper {
 
-    private lateinit var device: UiDevice
+    val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-    @Before
     fun startMainActivityFromHomeScreen() {
-        // Initialize UiDevice instance
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
         // Start from the home screen
         device.pressHome()
 
         // Wait for launcher
         val launcherPackage: String = device.launcherPackageName
-        assertThat(launcherPackage, notNullValue())
+        Assert.assertThat(launcherPackage, CoreMatchers.notNullValue())
         device.wait(
             Until.hasObject(By.pkg(launcherPackage).depth(0)),
             LAUNCH_TIMEOUT
@@ -55,21 +47,5 @@ class ExampleInstrumentedTest {
             Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
             LAUNCH_TIMEOUT
         )
-    }
-
-    @Test
-    fun useAppContext() {
-        val saveButton: UiObject = device.findObject(
-            UiSelector().descriptionContains("SaveButton"))
-
-        val textField: UiObject = device.findObject(
-            UiSelector().descriptionContains("NewItemTextField"))
-
-        val textIsDisplaying: UiObject = device.findObject(
-            UiSelector().text("Do this"))
-        textField.click()
-        textField.legacySetText("Do this")
-        saveButton.click()
-        assertEquals(true, textIsDisplaying.exists())
     }
 }
