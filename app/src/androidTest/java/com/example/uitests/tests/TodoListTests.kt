@@ -10,18 +10,31 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class TodoListTests{
 
-    val setupHelper = SetupHelper()
     val addItemScreen = AddItemScreen()
+
+    val itemOne = "Do this"
+    val itemTwo = "Also do this"
+
 
     @Before
     fun setUpDevice() {
-        setupHelper.startMainActivityFromHomeScreen()
+        SetupHelper.startMainActivityFromHomeScreen()
     }
 
     @Test
-    fun addItemMakeSureItemIsDisplaying() {
-        addItemScreen.writeText("Do this")
+    fun addedItemIsDisplaying() {
+        addItemScreen.writeText(itemOne)
         addItemScreen.clickSaveButton()
-        addItemScreen.verifyTextIsDisplaying()
+        addItemScreen.verifyTextIsDisplaying(itemOne)
+    }
+
+    @Test
+    fun addSeveralItems() {
+        addItemScreen.writeText(itemOne)
+        addItemScreen.clickSaveButton()
+        addItemScreen.writeText(itemTwo)
+        addItemScreen.clickSaveButton()
+        addItemScreen.verifyTextIsDisplaying(itemOne)
+        addItemScreen.verifyTextIsDisplaying(itemTwo)
     }
 }
