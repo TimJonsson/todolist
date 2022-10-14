@@ -7,17 +7,12 @@ import org.junit.Assert.assertEquals
 
 class AddItemScreen {
 
-    private val setupHelper = SetupHelper()
 
-
-    val saveButton: UiObject = setupHelper.device.findObject(
+    val saveButton: UiObject = SetupHelper.device.findObject(
         UiSelector().descriptionContains("SaveButton"))
 
-    val textField: UiObject = setupHelper.device.findObject(
+    val textField: UiObject = SetupHelper.device.findObject(
         UiSelector().descriptionContains("NewItemTextField"))
-
-    val textIsDisplaying: UiObject = setupHelper.device.findObject(
-        UiSelector().text("Do this"))
 
     fun writeText (text: String) {
         textField.click()
@@ -28,7 +23,9 @@ class AddItemScreen {
         saveButton.click()
     }
 
-    fun verifyTextIsDisplaying() {
-        assertEquals(textIsDisplaying.text, "Do this")
+    fun verifyTextIsDisplaying(text: String) {
+        val textIsDisplaying = SetupHelper.device.findObject(
+            UiSelector().text(text))
+        assertEquals(textIsDisplaying.exists(), true)
     }
 }

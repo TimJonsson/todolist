@@ -16,7 +16,7 @@ private val LAUNCH_TIMEOUT = 5000L
 
 private val STRING_TO_BE_TYPED = "UiAutomator"
 
-open class SetupHelper {
+object SetupHelper {
 
     val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
