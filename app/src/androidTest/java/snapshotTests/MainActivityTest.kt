@@ -1,13 +1,12 @@
-package com.example.uitests
+package snapshotTests
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.test.junit4.createComposeRule
+import com.example.todolist.DefaultPreview
+import com.example.todolist.ToDoListItem
 import com.karumi.shot.ScreenshotTest
 import org.junit.Rule
 import org.junit.Test
-import com.example.todolist.DefaultPreview
-import com.example.todolist.ToDoListItem
-
 
 class MainActivityTest: ScreenshotTest {
 
