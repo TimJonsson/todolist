@@ -19,7 +19,7 @@ jobs:
           with:
             arguments: test
         - name: create artifcat dir
-          - run: mkdir -p build/reports 
+          run: mkdir -p build/reports 
         - name: Upload build reports
           uses: actions/upload-artifact@v3
           with:
