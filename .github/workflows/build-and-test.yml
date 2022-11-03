@@ -19,10 +19,11 @@ jobs:
           with:
             arguments: test
         - name: create artifcat dir
-          run: mkdir -p build/reports 
-        - name: Upload build reports
-          uses: actions/upload-artifact@v3
+          run: |
+            mkdir -p ~/new/artifact
+            echo hello > ~/new/artifact/world.txt
+        - uses: actions/upload-artifact@v3
           with:
-            name: build-reports
-            path: build/reports/
+            name: Artifacts-V3
+            path: ~/new/**/*
 
