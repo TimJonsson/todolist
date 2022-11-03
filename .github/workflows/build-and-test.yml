@@ -18,6 +18,8 @@ jobs:
           uses: gradle/gradle-build-action@v2
           with:
             arguments: test
+        - name: create artifcat dir
+          - run: mkdir -p build/reports 
         - name: Upload build reports
           uses: actions/upload-artifact@v3
           with:
