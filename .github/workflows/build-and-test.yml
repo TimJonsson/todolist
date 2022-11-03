@@ -19,8 +19,8 @@ jobs:
           with:
             arguments: test
         - run: |
-          pwd
-          ls
+            pwd
+            ls
         - uses: actions/upload-artifact@v3
           if: failure()
           with:
