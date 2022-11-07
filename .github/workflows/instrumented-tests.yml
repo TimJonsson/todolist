@@ -18,11 +18,8 @@ jobs:
           run: |
             pwd
             ls
-            ./gradlew tasks
         - name: Build with Gradle
-          uses: gradle/gradle-build-action@v2
-          with:
-            arguments: ./gradlew connectedAndroidTest
+          run: ./gradlew connectedAndroidTest
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
           if: failure()
