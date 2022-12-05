@@ -22,8 +22,8 @@ jobs:
 
         - name: Create test directorys
           run: |
-            mkdir -p /storage/emulated/0/Download/screenshots/com.example.todolist.test/screenshots-default/
-            mkdir -p /storage/emulated/0/Download/screenshots/com.example.todolist.test/screenshots-compose-default/
+            sudo mkdir -p /storage/emulated/0/Download/screenshots/com.example.todolist.test/screenshots-default/
+            sudo mkdir -p /storage/emulated/0/Download/screenshots/com.example.todolist.test/screenshots-compose-default/
         
         - name: run tests
           uses: reactivecircus/android-emulator-runner@v2
