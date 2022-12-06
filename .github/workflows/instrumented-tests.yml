@@ -3,7 +3,7 @@ on: [workflow_dispatch,push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest # to have VM Acceleration https://github.com/ReactiveCircus/android-emulator-runner
+    runs-on: macos-latest # to have VM Acceleration https://github.com/ReactiveCircus/android-emulator-runner
 
     steps:
         - uses: actions/checkout@v3
