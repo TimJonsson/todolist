@@ -1,5 +1,5 @@
 name: Build and run unit tests
-on: [workflow_dispatch]
+on: [workflow_dispatch,push]
 
 jobs:
   build:

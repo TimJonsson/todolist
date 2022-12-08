@@ -1,4 +1,4 @@
-name: Build and run instrumented tests
+name: Run snapshot and UI e2e tests
 on: [workflow_dispatch,push]
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
             api-level: 31
             arch: x86_64
             profile: Nexus 6
-            script: ./gradlew connectedCheck
+            script: ./gradlew connectedDebugAndroidTest
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
