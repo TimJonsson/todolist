@@ -1,4 +1,4 @@
-package com.example.todolist
+package com.example.unittests
 
 import org.junit.Test
 
@@ -9,7 +9,7 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class ArithmeticUnitTest {
     @Test
     fun additionIsCorrect() {
         assertEquals(4, 2 + 2)
