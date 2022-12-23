@@ -19,8 +19,17 @@ jobs:
         - name: Setup Android SDK
           uses: android-actions/setup-android@v2
 
-        - name: Validate Gradle wrapper
-          uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+        - name: Cache Gradle and wrapper
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+        - name: Make Gradle executable
+          run: chmod +x ./gradlew
         
         - name: run tests
           uses: reactivecircus/android-emulator-runner@v2
@@ -35,4 +44,3 @@ jobs:
           if: failure()
           with:
             path: app/build/reports/**
-

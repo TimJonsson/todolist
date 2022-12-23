@@ -22,4 +22,3 @@ jobs:
           if: failure()
           with:
             path: app/build/reports/tests/testDebugUnitTest/index.html
-
