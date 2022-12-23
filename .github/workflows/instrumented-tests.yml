@@ -4,33 +4,36 @@ on: [workflow_dispatch,push]
 jobs:
   build:
     runs-on: macos-latest # to have VM Acceleration https://github.com/ReactiveCircus/android-emulator-runner
+    env:
+      api_level: 31
 
     steps:
-        - uses: actions/checkout@v3
+      - run: echo "This is the api level $api_level"  
+        # - uses: actions/checkout@v3
           
-        - name: Set up JDK 11
-          uses: actions/setup-java@v3
-          with:
-            java-version: '11'
-            distribution: 'adopt'
+        # - name: Set up JDK 11
+        #   uses: actions/setup-java@v3
+        #   with:
+        #     java-version: '11'
+        #     distribution: 'adopt'
             
-        - name: Setup Android SDK
-          uses: android-actions/setup-android@v2
+        # - name: Setup Android SDK
+        #   uses: android-actions/setup-android@v2
 
-        - name: Validate Gradle wrapper
-          uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+        # - name: Validate Gradle wrapper
+        #   uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
         
-        - name: run tests
-          uses: reactivecircus/android-emulator-runner@v2
-          with:
-            api-level: 31
-            arch: x86_64
-            profile: Nexus 6
-            script: ./gradlew connectedDebugAndroidTest
+        # - name: run tests
+        #   uses: reactivecircus/android-emulator-runner@v2
+        #   with:
+        #     api-level: 31
+        #     arch: x86_64
+        #     profile: Nexus 6
+        #     script: ./gradlew connectedDebugAndroidTest
 
-        - name: Upload artifacts
-          uses: actions/upload-artifact@v3
-          if: failure()
-          with:
-            path: app/build/reports/**
+        # - name: Upload artifacts
+        #   uses: actions/upload-artifact@v3
+        #   if: failure()
+        #   with:
+        #     path: app/build/reports/**
 
