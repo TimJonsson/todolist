@@ -38,7 +38,7 @@ jobs:
             path: |
               ~/.android/avd/*
               ~/.android/adb*
-            key: avd-$api_level
+            key: "avd-$api_level"
 
         - name: create AVD and generate snapshot for caching
           if: steps.avd-cache.outputs.cache-hit != 'true'
