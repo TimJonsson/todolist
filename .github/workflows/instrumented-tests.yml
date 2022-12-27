@@ -1,11 +1,12 @@
 name: Run snapshot and UI e2e tests
 on: [workflow_dispatch,push]
 
+env:
+  api_level: 31
+
 jobs:
   build:
     runs-on: macos-latest # to have VM Acceleration https://github.com/ReactiveCircus/android-emulator-runner
-    env:
-      API_LEVEL: 31
 
     steps:
         - uses: actions/checkout@v3
@@ -38,13 +39,13 @@ jobs:
             path: |
               ~/.android/avd/*
               ~/.android/adb*
-            key: avd-$API_LEVEL
+            key: avd-$api_level
 
         - name: create AVD and generate snapshot for caching
           if: steps.avd-cache.outputs.cache-hit != 'true'
           uses: reactivecircus/android-emulator-runner@v2
           with:
-            api-level: $API_LEVEL
+            api-level: $api_level
             force-avd-creation: false
             emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
             disable-animations: false
