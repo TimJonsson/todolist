@@ -10,7 +10,7 @@ jobs:
     steps:
         # - uses: actions/checkout@v3
         - name: test
-          - run: |
+          run: |
             echo $api_level
             echo "$api_level"
           
