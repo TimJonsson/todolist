@@ -2,7 +2,7 @@ name: Run snapshot and UI e2e tests
 on: [workflow_dispatch,push]
 
 env:
-  api_level: 31
+  api_test: 31
 
 jobs:
   build:
@@ -39,13 +39,13 @@ jobs:
             path: |
               ~/.android/avd/*
               ~/.android/adb*
-            key: avd-$api_level
+            key: avd-$api_test
 
         - name: create AVD and generate snapshot for caching
           if: steps.avd-cache.outputs.cache-hit != 'true'
           uses: reactivecircus/android-emulator-runner@v2
           with:
-            api-level: $api_level
+            api-level: $api_test
             force-avd-creation: false
             emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
             disable-animations: false
@@ -54,7 +54,7 @@ jobs:
         - name: run tests
           uses: reactivecircus/android-emulator-runner@v2
           with:
-            api-level: $api_level
+            api-level: $api_test
             arch: x86_64
             profile: Nexus 6
             script: ./gradlew connectedDebugAndroidTest
