@@ -1,6 +1,9 @@
 name: Run snapshot and UI e2e tests
 on: [workflow_dispatch,push]
 
+env:
+  api_test: 31
+
 jobs:
   build:
     runs-on: macos-latest # to have VM Acceleration https://github.com/ReactiveCircus/android-emulator-runner
@@ -17,13 +20,43 @@ jobs:
         - name: Setup Android SDK
           uses: android-actions/setup-android@v2
 
-        - name: Validate Gradle wrapper
-          uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-        
+        - name: Cache Gradle and wrapper
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+              
+        - name: Make Gradle executable
+          run: chmod +x ./gradlew
+
+        - name: AVD cache
+          uses: actions/cache@v3
+          id: avd-cache
+          with:
+            path: |
+              ~/.android/avd/*
+              ~/.android/adb*
+            key: avd-${{ env.api_test }}
+
+        - name: create AVD and generate snapshot for caching
+          if: steps.avd-cache.outputs.cache-hit != 'true'
+          uses: reactivecircus/android-emulator-runner@v2
+          with:
+            api-level: ${{ env.api_test }}
+            arch: x86_64
+            force-avd-creation: false
+            emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+            disable-animations: false
+            script: echo "Generated AVD snapshot for caching."
+          
         - name: run tests
           uses: reactivecircus/android-emulator-runner@v2
           with:
-            api-level: 31
+            api-level: ${{ env.api_test }}
             arch: x86_64
             profile: Nexus 6
             script: ./gradlew connectedDebugAndroidTest
@@ -33,4 +66,3 @@ jobs:
           if: failure()
           with:
             path: app/build/reports/**
-

@@ -12,8 +12,20 @@ jobs:
           with:
             java-version: '11'
             distribution: 'adopt'
-        - name: Validate Gradle wrapper
-          uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
+        - name: Cache Gradle and wrapper
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+              
+        - name: Make Gradle executable
+          run: chmod +x ./gradlew
+
         - name: Build with Gradle
           uses: gradle/gradle-build-action@v2
           with:
@@ -22,4 +34,3 @@ jobs:
           if: failure()
           with:
             path: app/build/reports/tests/testDebugUnitTest/index.html
-
