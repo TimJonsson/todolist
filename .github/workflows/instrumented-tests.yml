@@ -39,13 +39,14 @@ jobs:
             path: |
               ~/.android/avd/*
               ~/.android/adb*
-            key: avd-$api_test
+            key: avd-${{ env.api_test }}
 
         - name: create AVD and generate snapshot for caching
           if: steps.avd-cache.outputs.cache-hit != 'true'
           uses: reactivecircus/android-emulator-runner@v2
           with:
             api-level: ${{ env.api_test }}
+            arch: x86_64
             force-avd-creation: false
             emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
             disable-animations: false
